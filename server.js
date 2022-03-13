@@ -25,6 +25,21 @@ app.get("/fact", (req, res, next) => {
     }))
 });
 
+// get external service by Breed
+// http://localhost:6000/to/breed
+app.get("/fact/:factBreed",(req, res, next) => {
+    const factBreed = req.params.factBreed;
+    randomFactBreed(factBreed)
+    .then(result => res.status(200).json(result)).
+    catch(err => res.status(err.status || 501).json({
+        error: {
+            message: err.message, 
+            status: err.status, 
+            method: req.method
+        }
+    }))
+})
+
 // add middleware to handle errors and bad url paths
 app.use((req, res, next) => {
     const error = new Error("NOT FOUND!");

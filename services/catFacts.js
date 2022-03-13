@@ -7,6 +7,14 @@ const randomFact = () => {
     })
 }
 
+const randomFactBreed = (breed) => {
+    console.log("Real Fact by Breed");
+    return axios.get(`${process.env.catURL}${breed}`).then(result => {
+        return result.data
+    })
+}
+
 module.exports = {
     randomFact,
+    randomFactBreed
 }
