@@ -2,21 +2,20 @@ const express = require("express");
 require("dotenv").config();
 
 const {
-    todoService,
-    todoServiceById
-} = require("./services/todoService");
+    randomFact,
+} = require("./services/catFacts");
 
 const app = express();
 
-// for localhost:5000/
+// for localhost:6000/
 app.get("/", (req, res, next) => {
-    res.status(200).send("Service is Up!!")
+    res.status(200).send("Cat Facts is Now Working!")
 });
 
 // get external services
-// http://localhost:5000/todo
-app.get("/todo", (req, res, next) => {
-    todoService()
+// http://localhost:6000/todo
+app.get("/fact", (req, res, next) => {
+    randomFact()
         .then(result => res.status(200).json(result))
         .catch(err => res.status(501).json({
             error: {
@@ -25,21 +24,6 @@ app.get("/todo", (req, res, next) => {
             }
     }))
 });
-
-// get external service by ID
-// http://localhost:4000/to/56
-app.get("/todo/:todoId",(req, res, next) => {
-    const todoId = req.params.todoId;
-    todoServiceById(todoId)
-    .then(result => res.status(200).json(result)).
-    catch(err => res.status(err.status || 501).json({
-        error: {
-            message: err.message, 
-            status: err.status, 
-            method: req.method
-        }
-    }))
-})
 
 // add middleware to handle errors and bad url paths
 app.use((req, res, next) => {
@@ -56,8 +40,5 @@ app.use((error, req, res, next) => {
         }
     })
 })
-
-
-
 
 app.listen(process.env.port, () => console.log(`Server starting on port ${process.env.port}`))
