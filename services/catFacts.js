@@ -1,20 +1,17 @@
 const axios = require("axios");
+require("dotenv").config();
 
 const randomFact = () => {
-    console.log("Cat Facts");
-    return axios.get(`${process.env.catURL}`).then(result => {
-        return result.data
-    })
+    console.log("Real Cat Facts");
+    return axios.get(`${process.env.catURL}`).then(result => result.data)
 }
 
-const randomFactBreed = (breed) => {
-    console.log("Real Fact by Breed");
-    return axios.get(`${process.env.catURL}${breed}`).then(result => {
-        return result.data
-    })
+const randomFactBreeds = (breeds) => {
+    console.log("Real Fact by Breeds");
+    return axios.get(`${process.env.catURL}${breeds}`).then(result => result.data)
 }
 
 module.exports = {
     randomFact,
-    randomFactBreed
+    randomFactBreeds
 }

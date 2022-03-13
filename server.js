@@ -3,6 +3,7 @@ require("dotenv").config();
 
 const {
     randomFact,
+    randomFactBreeds
 } = require("./services/catFacts");
 
 const app = express();
@@ -13,7 +14,7 @@ app.get("/", (req, res, next) => {
 });
 
 // get external services
-// http://localhost:6000/todo
+// http://localhost:6000/fact
 app.get("/fact", (req, res, next) => {
     randomFact()
         .then(result => res.status(200).json(result))
@@ -26,10 +27,10 @@ app.get("/fact", (req, res, next) => {
 });
 
 // get external service by Breed
-// http://localhost:6000/to/breed
-app.get("/fact/:factBreed",(req, res, next) => {
-    const factBreed = req.params.factBreed;
-    randomFactBreed(factBreed)
+// http://localhost:6000/to/breeds
+app.get("/fact/:factBreeds",(req, res, next) => {
+    const factBreeds = req.params.factBreeds;
+    randomFactBreeds(factBreeds)
     .then(result => res.status(200).json(result)).
     catch(err => res.status(err.status || 501).json({
         error: {
